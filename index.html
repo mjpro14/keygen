@@ -4,49 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Key Generator - FRP Portal</title>
-
-    <link rel="stylesheet" href="style.css">
-
+    <!-- CryptoJS Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- MAIN GENERATOR CARD -->
     <div class="card">
+        <div class="status-badge" id="sellerBadge" style="display: none;">
+            <span>🟢 Seller Activated</span>
+            <button class="reset-btn" onclick="lockSeller()" title="Lock / Reset Activation">🔒 Lock</button>
+        </div>
+
         <h2>Key Generator</h2>
+        <p class="subtitle">FRP Portal Activation Admin</p>
 
-        <p class="subtitle">
-            FRP Portal Activation Admin
-        </p>
+        <label for="macInput">User Device ID / MAC Address:</label>
+        <input type="text" id="macInput" placeholder="e.g. 240AC456789A" autocomplete="off">
 
-        <label for="macInput">
-            User Device ID / MAC Address:
-        </label>
+        <button class="main-btn" onclick="generateKey()">GENERATE KEY</button>
 
-        <input
-            type="text"
-            id="macInput"
-            placeholder="e.g. 240AC456789A"
-            autocomplete="off"
-        >
-
-        <button onclick="generateKey()">
-            GENERATE KEY
-        </button>
-
-        <div class="result-box" id="resultArea">
-            <label>Activation Key:</label>
-
-            <div class="key-display" id="generatedKey">
-                ---
-            </div>
-
-            <button class="copy-btn" onclick="copyKey()">
-                Copy Key
-            </button>
+        <div class="result-box" id="resultArea" style="display: none;">
+            <label style="margin:0;">Activation Key:</label>
+            <div class="key-display" id="generatedKey"></div>
+            <button class="copy-btn" onclick="copyKey()">Copy Key</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- SELLER ACTIVATION MODAL -->
+    <div class="seller-modal-overlay" id="sellerModal">
+        <div class="seller-modal-box">
+            <div class="seller-modal-icon">🔐</div>
+            <h3 class="seller-modal-title">Seller Activation</h3>
+            <p class="seller-modal-text">
+                Activate your seller account to access the FRP Portal Key Generator.
+            </p>
 
+            <label class="seller-modal-label" for="sellerCode">Seller Activation Code</label>
+            <input class="seller-modal-input" type="text" id="sellerCode" placeholder="ENTER ACTIVATION CODE" autocomplete="off">
+
+            <button type="button" class="seller-modal-button" onclick="activateSeller()">ACTIVATE SELLER</button>
+
+            <div class="seller-modal-error" id="sellerError">Invalid activation code.</div>
+            <div class="seller-modal-success" id="sellerSuccess">✓ Seller activated successfully!</div>
+
+            <div class="seller-modal-footer">FRP Portal Seller License</div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast"></div>
+
+    <!-- External JS -->
+    <script src="script.js"></script>
 </body>
 </html>
